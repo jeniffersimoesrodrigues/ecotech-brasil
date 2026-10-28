@@ -14,13 +14,52 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      survey_responses: {
+        Row: {
+          created_at: string
+          feedback: string | null
+          id: string
+          q1: string
+          q2: string
+          q3: string
+          q4: string
+          q5: string
+        }
+        Insert: {
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          q1: string
+          q2: string
+          q3: string
+          q4: string
+          q5: string
+        }
+        Update: {
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          q1?: string
+          q2?: string
+          q3?: string
+          q4?: string
+          q5?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      survey_stats: {
+        Args: never
+        Returns: {
+          answer: string
+          question: string
+          total: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
