@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DataCentersRouteImport } from './routes/data-centers'
+import { Route as EmpresasRouteImport } from './routes/empresas'
+import { Route as Ods9RouteImport } from './routes/ods-9'
+import { Route as PesquisaRouteImport } from './routes/pesquisa'
+import { Route as ReferenciasRouteImport } from './routes/referencias'
+import { Route as TiVerdeRouteImport } from './routes/ti-verde'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataCentersRoute = DataCentersRouteImport.update({
+  id: '/data-centers',
+  path: '/data-centers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresasRoute = EmpresasRouteImport.update({
+  id: '/empresas',
+  path: '/empresas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Ods9Route = Ods9RouteImport.update({
+  id: '/ods-9',
+  path: '/ods-9',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PesquisaRoute = PesquisaRouteImport.update({
+  id: '/pesquisa',
+  path: '/pesquisa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferenciasRoute = ReferenciasRouteImport.update({
+  id: '/referencias',
+  path: '/referencias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TiVerdeRoute = TiVerdeRouteImport.update({
+  id: '/ti-verde',
+  path: '/ti-verde',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/data-centers': typeof DataCentersRoute
+  '/empresas': typeof EmpresasRoute
+  '/ods-9': typeof Ods9Route
+  '/pesquisa': typeof PesquisaRoute
+  '/referencias': typeof ReferenciasRoute
+  '/ti-verde': typeof TiVerdeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/data-centers': typeof DataCentersRoute
+  '/empresas': typeof EmpresasRoute
+  '/ods-9': typeof Ods9Route
+  '/pesquisa': typeof PesquisaRoute
+  '/referencias': typeof ReferenciasRoute
+  '/ti-verde': typeof TiVerdeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/data-centers': typeof DataCentersRoute
+  '/empresas': typeof EmpresasRoute
+  '/ods-9': typeof Ods9Route
+  '/pesquisa': typeof PesquisaRoute
+  '/referencias': typeof ReferenciasRoute
+  '/ti-verde': typeof TiVerdeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/data-centers'
+    | '/empresas'
+    | '/ods-9'
+    | '/pesquisa'
+    | '/referencias'
+    | '/ti-verde'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/data-centers'
+    | '/empresas'
+    | '/ods-9'
+    | '/pesquisa'
+    | '/referencias'
+    | '/ti-verde'
+  id:
+    | '__root__'
+    | '/'
+    | '/data-centers'
+    | '/empresas'
+    | '/ods-9'
+    | '/pesquisa'
+    | '/referencias'
+    | '/ti-verde'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DataCentersRoute: typeof DataCentersRoute
+  EmpresasRoute: typeof EmpresasRoute
+  Ods9Route: typeof Ods9Route
+  PesquisaRoute: typeof PesquisaRoute
+  ReferenciasRoute: typeof ReferenciasRoute
+  TiVerdeRoute: typeof TiVerdeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data-centers': {
+      id: '/data-centers'
+      path: '/data-centers'
+      fullPath: '/data-centers'
+      preLoaderRoute: typeof DataCentersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresas': {
+      id: '/empresas'
+      path: '/empresas'
+      fullPath: '/empresas'
+      preLoaderRoute: typeof EmpresasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ods-9': {
+      id: '/ods-9'
+      path: '/ods-9'
+      fullPath: '/ods-9'
+      preLoaderRoute: typeof Ods9RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pesquisa': {
+      id: '/pesquisa'
+      path: '/pesquisa'
+      fullPath: '/pesquisa'
+      preLoaderRoute: typeof PesquisaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referencias': {
+      id: '/referencias'
+      path: '/referencias'
+      fullPath: '/referencias'
+      preLoaderRoute: typeof ReferenciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ti-verde': {
+      id: '/ti-verde'
+      path: '/ti-verde'
+      fullPath: '/ti-verde'
+      preLoaderRoute: typeof TiVerdeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DataCentersRoute: DataCentersRoute,
+  EmpresasRoute: EmpresasRoute,
+  Ods9Route: Ods9Route,
+  PesquisaRoute: PesquisaRoute,
+  ReferenciasRoute: ReferenciasRoute,
+  TiVerdeRoute: TiVerdeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
