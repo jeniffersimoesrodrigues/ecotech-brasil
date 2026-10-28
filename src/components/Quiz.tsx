@@ -12,7 +12,7 @@ const QUESTIONS = [
 export function Quiz() {
   const [answers, setAnswers] = useState<(number | null)[]>(QUESTIONS.map(() => null));
   const done = answers.every((a) => a !== null);
-  const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const score = answers.filter((a, i) => a === QUESTIONS[i]?.correct).length;
 
   return (
     <div className="space-y-6">
