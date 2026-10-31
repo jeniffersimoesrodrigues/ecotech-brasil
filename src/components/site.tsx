@@ -1,6 +1,69 @@
-import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
-import { Leaf, Menu, X } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState, type ReactNode } from "react";
+import { Leaf, LogOut, Menu, User, X } from "lucide-react";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+
+import { supabase } from "@/integrations/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+function useSessionUser() {
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+  return user;
+}
+
+function AuthAffordance() {
+  const user = useSessionUser();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  if (!user) {
+    return (
+      <Link
+        to="/auth"
+        className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+      >
+        Entrar
+      </Link>
+    );
+  }
+
+  async function handleSignOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/", replace: true });
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-secondary-foreground" aria-label="Minha conta">
+        <User className="h-5 w-5" aria-hidden />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="max-w-56 truncate">{user.email}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleSignOut}>
+          <LogOut className="mr-2 h-4 w-4" aria-hidden /> Sair
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export const NAV = [
   { to: "/", label: "Início" },
@@ -35,9 +98,12 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <button className="rounded-md p-2 lg:hidden" aria-expanded={open} aria-controls="menu-movel" aria-label={open ? "Fechar menu" : "Abrir menu"} onClick={() => setOpen(!open)}>
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-3">
+          <AuthAffordance />
+          <button className="rounded-md p-2 lg:hidden" aria-expanded={open} aria-controls="menu-movel" aria-label={open ? "Fechar menu" : "Abrir menu"} onClick={() => setOpen(!open)}>
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
       {open && (
         <nav id="menu-movel" aria-label="Menu móvel" className="border-t lg:hidden">
