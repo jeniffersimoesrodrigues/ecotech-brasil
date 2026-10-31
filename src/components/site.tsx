@@ -98,9 +98,12 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <button className="rounded-md p-2 lg:hidden" aria-expanded={open} aria-controls="menu-movel" aria-label={open ? "Fechar menu" : "Abrir menu"} onClick={() => setOpen(!open)}>
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-3">
+          <AuthAffordance />
+          <button className="rounded-md p-2 lg:hidden" aria-expanded={open} aria-controls="menu-movel" aria-label={open ? "Fechar menu" : "Abrir menu"} onClick={() => setOpen(!open)}>
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
       {open && (
         <nav id="menu-movel" aria-label="Menu móvel" className="border-t lg:hidden">
